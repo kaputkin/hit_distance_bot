@@ -1,4 +1,4 @@
-library(magick)
+library(magick) 
 library(cropcircles)
 
 names = c("Judge","Schwarber","Trout","Alonso","Riley", "Alvarez", "Walker", "Betts", "Tellez", "Goldschmidt")
