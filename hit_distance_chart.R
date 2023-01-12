@@ -2,6 +2,8 @@ library(tidyverse)
 library(ggimage)
 library(magick)
 
+top10$image <- paste0('./crops/',top10$batter,'.png')
+
 df = data.frame(
   name = c("Judge","Schwarber","Trout","Alonso","Riley", "Alvarez", "Walker", "Betts", "Tellez", "Goldschmidt"),  
   value = c(62,46,40,40,38,37,36,35,35,35),
@@ -15,20 +17,23 @@ df = data.frame(
             "C:/Users/kaputka/Downloads/ball_players/crops/Betts.png",
             "C:/Users/kaputka/Downloads/ball_players/crops/Tellez.png",
             "C:/Users/kaputka/Downloads/ball_players/crops/no_hs.png")
-) %>% 
-  mutate(value1 = value) %>%
-  transform(name = reorder(name, value))
+) 
 
+df=top10
 
-ggplot(df, aes(name, value)) + 
+df %>% 
+  mutate(value1 = total) %>%
+  transform(name = reorder(player_name, total))
+
+ggplot(df, aes(player_name, total)) + 
   geom_col(width = .35,
            position = position_dodge(0.1),
            fill = '#173753') + 
-  geom_image(aes(image=image, y = value1), size=.07) +
+  geom_image(aes(image=image, y = total), size=.07) +
   coord_flip()+
   geom_text(
-        aes(label = paste(value, "HR"),
-            y = value - 3,
+        aes(label = paste(total, "Distance"),
+            y = total - 3,
             hjust = 1,
             vjust= .4),
         colour = "#FFFFFF",
@@ -36,7 +41,7 @@ ggplot(df, aes(name, value)) +
         size = 4,
         fontface = "bold")+
   geom_text(
-        aes(label = name,
+        aes(label = player_name,
             y = 1,
             hjust = 0,
             vjust = .38),
