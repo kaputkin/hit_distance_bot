@@ -1,43 +1,32 @@
 library(tidyverse) 
 library(ggimage)
 library(magick)
+library(dplyr)
 
-top10$image <- paste0('./crops/',top10$batter,'.png')
+####IMPROVEMENTS####
+#Need to add link to twitter
+#work on colors and design
 
-df = data.frame(
-  name = c("Judge","Schwarber","Trout","Alonso","Riley", "Alvarez", "Walker", "Betts", "Tellez", "Goldschmidt"),  
-  value = c(62,46,40,40,38,37,36,35,35,35),
-  image = c("C:/Users/kaputka/Downloads/ball_players/crops/Judge.png", 
-            "C:/Users/kaputka/Downloads/ball_players/crops/Schwarber.png", 
-            "C:/Users/kaputka/Downloads/ball_players/crops/Trout.png",
-            "C:/Users/kaputka/Downloads/ball_players/crops/Alonso.png",
-            "C:/Users/kaputka/Downloads/ball_players/crops/Riley.png",
-            "C:/Users/kaputka/Downloads/ball_players/crops/Alvarez.png",
-            "C:/Users/kaputka/Downloads/ball_players/crops/Walker.png",
-            "C:/Users/kaputka/Downloads/ball_players/crops/Betts.png",
-            "C:/Users/kaputka/Downloads/ball_players/crops/Tellez.png",
-            "C:/Users/kaputka/Downloads/ball_players/crops/no_hs.png")
-) 
-
+top10$image <- paste0('https://raw.githubusercontent.com/kaputkin/hit_distance_bot/main/crops/',top10$batter,'.png')
 df=top10
 
-df %>% 
-  mutate(value1 = total) %>%
-  transform(name = reorder(player_name, total))
+df <- df %>% arrange(desc(total))
 
-ggplot(df, aes(player_name, total)) + 
+df <- df[1:4,]
+
+g <- ggplot(df, aes(x = reorder(player_name, total), y = total)) + 
   geom_col(width = .35,
            position = position_dodge(0.1),
            fill = '#173753') + 
   geom_image(aes(image=image, y = total), size=.07) +
   coord_flip()+
   geom_text(
-        aes(label = paste(total, "Distance"),
-            y = total - 3,
-            hjust = 1,
+        aes(label = paste(scales::comma(round(total), accuracy=1), "Feet"),
+            y = total,
+            hjust = 1.31,
             vjust= .4),
         colour = "#FFFFFF",
-        family = "Econ Sans Cnd",
+        family = "Arial Black",
         size = 4,
         fontface = "bold")+
   geom_text(
@@ -46,7 +35,7 @@ ggplot(df, aes(player_name, total)) +
             hjust = 0,
             vjust = .38),
         colour = "#C5D8E4",
-        family = "Econ Sans Cnd",
+        family = "Arial Black",
         fontface = "bold",
         size = 5)+
   theme(
@@ -63,9 +52,11 @@ ggplot(df, aes(player_name, total)) +
     # Remove labels from the vertical axis
     axis.text.y = element_blank(),
     # But customize labels for the horizontal axis
-    axis.text.x = element_text(family = "Econ Sans Cnd", size = 10, face="bold")
+    axis.text.x = element_text(family = "Arial Black", size = 10, face="bold")
   )
 
+ggsave("plot.png", g)
 
+setwd('/Users/mac/Desktop/waywiser/Baseball Hit Distance')
 
 
