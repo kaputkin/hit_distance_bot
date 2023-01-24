@@ -5,7 +5,7 @@ library(dplyr)
 #library(extrafont)
 library(showtext)
 
-font_add_google("Special Elite", family = "special")
+font_add_google("Bevan", family = "bevan")
 showtext_auto()
 
 #font_import()
