@@ -2,18 +2,36 @@ library(tidyverse)
 library(ggimage)
 library(magick)
 library(dplyr)
+library(extrafont)
+font_import()
+fonts()
 
 ####IMPROVEMENTS####
-#Need to add link to twitter
-#work on colors and design
+# [] Need to add link to twitter
+# [] work on colors and design
+# [] need  figure out how to assign a no_hs.png to new players, or alternatively
+#    how to scrape, crop, background images straight from Baseball Savant for each Top10 list
+# [] add title
+# [] add twitter handle
 
-top10$image <- paste0('https://raw.githubusercontent.com/kaputkin/hit_distance_bot/main/crops/',top10$batter,'.png')
+top10 <- top10[1:3]
+top10$batter[4] <- "999999"
+list.files(tempdir())
+
+
+#find headshot file path
+top10$image <- paste0(tempdir(),'/',top10$batter,'.png')
+
+#reformat name
+top10$player_name <-  sub("(\\w+),\\s(\\w+)","\\2 \\1", top10$player_name)
+
+#put in df
 df=top10
 
+#arrange from most to least for chart
 df <- df %>% arrange(desc(total))
 
-df <- df[1:4,]
-
+#make chart
 g <- ggplot(df, aes(x = reorder(player_name, total), y = total)) + 
   geom_col(width = .35,
            position = position_dodge(0.1),
@@ -25,19 +43,19 @@ g <- ggplot(df, aes(x = reorder(player_name, total), y = total)) +
             y = total,
             hjust = 1.31,
             vjust= .4),
-        colour = "#FFFFFF",
-        family = "Arial Black",
+        colour = "#C5D8E4",
+        family = "Tolyer X 3D",
         size = 4,
-        fontface = "bold")+
+        fontface = "plain")+
   geom_text(
         aes(label = player_name,
-            y = 1,
+            y = .01*(max(total)),
             hjust = 0,
             vjust = .38),
-        colour = "#C5D8E4",
-        family = "Arial Black",
-        fontface = "bold",
-        size = 5)+
+        colour = "#FFFFFF",
+        family = "Tolyer X 3D",
+        fontface = "plain",
+        size = 4)+
   theme(
     # Set background color to white
     panel.background = element_rect(fill = "#C5D8E4"),
@@ -58,5 +76,9 @@ g <- ggplot(df, aes(x = reorder(player_name, total), y = total)) +
 ggsave("plot.png", g)
 
 setwd('/Users/mac/Desktop/waywiser/Baseball Hit Distance')
+
+
+
+
 
 

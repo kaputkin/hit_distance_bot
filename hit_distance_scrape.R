@@ -12,7 +12,7 @@
 #tweet out chart
 
 #get date list from 4/7/2022 to 4/30/2022
-dates <- seq(as.Date("2022-04-07"), as.Date("2022-11-07"), by = "days")
+dates <- seq(as.Date("2022-05-07"), as.Date("2022-05-11"), by = "days")
 
 #loop through each date in the date list
 for (i in seq_along(dates)) {
