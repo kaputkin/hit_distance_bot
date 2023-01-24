@@ -2,15 +2,18 @@ library(tidyverse)
 library(ggimage)
 library(magick)
 library(dplyr)
-library(extrafont)
-font_import()
-fonts()
+#library(extrafont)
+library(showtext)
+
+font_add_google("Special Elite", family = "special")
+showtext_auto()
+
+#font_import()
+#fonts()
 
 ####IMPROVEMENTS####
 # [] Need to add link to twitter
 # [] work on colors and design
-# [] need  figure out how to assign a no_hs.png to new players, or alternatively
-#    how to scrape, crop, background images straight from Baseball Savant for each Top10 list
 # [] add title
 # [] add twitter handle
 
@@ -44,7 +47,7 @@ g <- ggplot(df, aes(x = reorder(player_name, total), y = total)) +
             hjust = 1.31,
             vjust= .4),
         colour = "#C5D8E4",
-        family = "Tolyer X 3D",
+        family = "Arial",
         size = 4,
         fontface = "plain")+
   geom_text(
@@ -53,9 +56,10 @@ g <- ggplot(df, aes(x = reorder(player_name, total), y = total)) +
             hjust = 0,
             vjust = .38),
         colour = "#FFFFFF",
-        family = "Tolyer X 3D",
+        family = "Arial",
         fontface = "plain",
         size = 4)+
+  ggtitle("Who's Hit The Furthers?")+
   theme(
     # Set background color to white
     panel.background = element_rect(fill = "#C5D8E4"),
@@ -70,7 +74,9 @@ g <- ggplot(df, aes(x = reorder(player_name, total), y = total)) +
     # Remove labels from the vertical axis
     axis.text.y = element_blank(),
     # But customize labels for the horizontal axis
-    axis.text.x = element_text(family = "Arial Black", size = 10, face="bold")
+    axis.text.x = element_text(family = "Arial Black", size = 10, face="bold"),
+    #title
+    plot.title = element_text(color="red", size=14, face="bold.italic")
   )
 
 ggsave("plot.png", g)
