@@ -8,14 +8,6 @@ library(showtext)
 font_add_google("Bevan", family = "bevan")
 showtext_auto()
 
-#font_import()
-#fonts()
-
-####IMPROVEMENTS####
-# [] Need to add link to twitter
-# [] work on colors and design
-# [] add title
-# [] add twitter handle
 
 top10 <- top10[1:3]
 top10$batter[4] <- "999999"
