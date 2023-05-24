@@ -7,6 +7,10 @@ library(magick)
 library(dplyr)
 library(showtext)
 library(lubridate)
+library(baseballr)
+library(magick)
+library(cropcircles)
+library(rtweet)
 
 
 
@@ -331,10 +335,6 @@ for (y in seq_along(yesterday)) {
    media_alt_text = paste("A chart showing the top ten MLB players who have hit the ball the furtherst in 2023 by cumulative total. In first place is",player_name1, "with", player1_dist, "feet of cumulative hit distance followed by", player_name2, "with", player2_dist,"feet of cumulative hit distance, and then", player_name3, "with", player3_dist, "feet in third place."),
    token = auth
   )
-#print("...sleeping for 24 hours...")
-#Sys.sleep(86400)
 }
-
-colnames(total.dist)
 
 
